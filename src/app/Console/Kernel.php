@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        // $schedule->command('import:json')->daily();
     }
 
     /**
@@ -29,4 +29,11 @@ class Kernel extends ConsoleKernel
 
         require base_path('routes/console.php');
     }
+    protected $commands = [
+        // คำสั่งที่เพิ่มเข้ามา
+        \App\Console\Commands\ImportJsonData::class,
+        \App\Console\Commands\UpdateDatabase::class,
+        \App\Console\Commands\HttpCommand::class,
+    ];
+  
 }

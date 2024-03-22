@@ -1,28 +1,20 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Redis;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\TestMail;
+use App\Http\Controllers\TestController;
+use App\Http\Controllers\SearchController;
+
+
+
 
 Route::get('/', function () {
     return view('welcome');
 });
+//test
+Route::get('/test', [TestController::class, 'index'])->name('vendor.test');
+Route::get('/search-vendors', [SearchController::class,'searchVendors'])->name('search.vendors');
+Route::get('/search-prefix', [SearchController::class,'searchPrefix'])->name('search.prefix');
 
-// Test Redis
-Route::get('/store', function() {
-    Redis::set('Bangkok', 'Krung Thep Maha Nakhon');
-});
-
-Route::get('/retrieve', function() {
-    return Redis::get('Bangkok');
-});
-
-// Test Mailhog
-Route::get('/send-email', function() {
-    Mail::to('samit@itgeniussite.dev')->send(new TestMail);
-});
 
 Auth::routes();
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -3,7 +3,7 @@ version: '3.9'
 # Network for Laravel 8
 networks:
   web_network:
-    name: laravel8
+    name: laravel
     driver: bridge
 
 services:
@@ -14,7 +14,7 @@ services:
       context: .
       dockerfile: Dockerfile
     image: laravel8-app
-    container_name: laravel8_app
+    container_name: laravel_app
     restart: always
     volumes:
       - ./src:/var/www
@@ -24,7 +24,7 @@ services:
   # MySQL Database Service
   db:
     image: mysql:8.0
-    container_name: laravel8_mysql
+    container_name: laravel_mysql
     volumes:
       - ./mysql/data:/var/lib/mysql
     environment:
@@ -41,7 +41,7 @@ services:
   # Nginx Web Server Service
   nginx:
     image: nginx:1.19.8-alpine
-    container_name: laravel8_nginx
+    container_name: laravel_nginx
     volumes:
       - ./src:/var/www
       - ./nginx/conf:/etc/nginx/conf.d
@@ -51,32 +51,12 @@ services:
     networks:
       - web_network
 
-  # Redis (caching)
-  redis:
-    image: redis:6.2.1-buster
-    container_name: laravel8_redis
-    volumes: 
-      - ./redis/data:/data
-    restart: always
-    networks:
-      - web_network      
-
-  # MailHog (local mail testing)
-  mailhog:
-    image: mailhog/mailhog:v1.0.1
-    container_name: laravel8_mailhog
-    ports:
-      - 8025:8025
-    restart: always
-    networks:
-      - web_network
-
   # phpMyAdmin (MySQL managment)
   phpmyadmin:
     image: phpmyadmin:5.1.0-apache
     depends_on:
       - db
-    container_name: laravel8_phpmyadmin
+    container_name: laravel_phpmyadmin
     environment:
       PMA_HOST: db
       PMA_PORT: 3306

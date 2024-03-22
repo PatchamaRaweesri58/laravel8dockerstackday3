@@ -1,0 +1,3 @@
+# Ignore mysql_data directory
+mysql_data/
+/vendor/
